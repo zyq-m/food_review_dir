@@ -7,7 +7,7 @@ import {
   Review,
   Social_media,
   Layout,
-} from "../../components";
+} from "../../../components";
 
 const Add_restaurant = () => {
   const { register, handleSubmit } = useForm();

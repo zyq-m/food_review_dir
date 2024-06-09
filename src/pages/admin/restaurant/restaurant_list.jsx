@@ -1,7 +1,7 @@
 import { useEffect } from "react";
-import { Layout } from "../../components";
-import { api } from "../../service/api";
-import { useRestaurantStore } from "../../hooks";
+import { Layout } from "../../../components";
+import { api } from "../../../service/api";
+import { useRestaurantStore } from "../../../hooks";
 import { Link } from "react-router-dom";
 
 const Restaurant_list = () => {
