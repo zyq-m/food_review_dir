@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { useUserStore } from "../hooks";
 
 const Header = () => {
+  const logout = useUserStore((state) => state.remove_user);
   return (
     <header className="navbar bg-base-100">
       <div className="navbar-start">
@@ -25,6 +27,14 @@ const Header = () => {
             tabIndex={0}
             className="menu menu-sm dropdown-content mt-3 z-10 p-2 shadow bg-base-100 rounded-box w-52"
           >
+            <li>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) => (isActive ? "active" : "")}
+              >
+                Dashboard
+              </NavLink>
+            </li>
             <li>
               <NavLink
                 to="/restaurant_list"
@@ -78,7 +88,7 @@ const Header = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <button onClick={logout}>Logout</button>
             </li>
           </ul>
         </div>

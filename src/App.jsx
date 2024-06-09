@@ -4,9 +4,11 @@ import * as Pages from "./pages";
 const App = () => {
   return (
     <Routes>
+      <Route path="/" element={<Pages.Landing_page />} />
       <Route path="/login" element={<Pages.Login_page />} />
       <Route path="/restaurant/:id" element={<Pages.View_restaurant />} />
       <Route element={<ProtectedRoute role={[1]} />}>
+        <Route path="/dashboard" element={<Pages.Dashboard />} />
         <Route path="/restaurant_list" element={<Pages.Restaurant_list />} />
         <Route path="/add_restaurant" element={<Pages.Add_restaurant />} />
         <Route
