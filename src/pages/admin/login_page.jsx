@@ -1,7 +1,7 @@
 import { useForm } from "react-hook-form";
-import { api } from "../service/api";
+import { api } from "../../service/api";
 import { jwtDecode } from "jwt-decode";
-import useUserStore from "../hooks/useUserStore";
+import useUserStore from "../../hooks/useUserStore";
 import { useNavigate } from "react-router-dom";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
