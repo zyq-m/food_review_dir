@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { api } from "../../../service/api";
-import { Layout } from "../../../components";
+import { api } from "../service/api";
+import { Layout } from "../components";
 import dayjs from "dayjs";
 
 import LocalPhoneRoundedIcon from "@mui/icons-material/LocalPhoneRounded";
