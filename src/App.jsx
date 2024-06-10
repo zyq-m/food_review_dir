@@ -5,7 +5,6 @@ const App = () => {
   return (
     <Routes>
       <Route path="/" element={<Pages.Landing_page />} />
-      <Route path="/main" element={<Pages.Main_page />} />
       <Route path="/login" element={<Pages.Login_page />} />
       <Route path="/find_restaurant" element={<Pages.Find_restaurant />} />
       <Route path="/restaurant/:id" element={<Pages.View_restaurant />} />
