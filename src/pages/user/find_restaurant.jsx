@@ -30,7 +30,16 @@ const Find_restaurant = () => {
     }
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    api
+      .get("/restaurant/search", { params: { name: "" } })
+      .then((res) => {
+        setRestaurant(res.data.restaurant);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   return (
     <Layout>
