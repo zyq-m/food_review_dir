@@ -4,6 +4,13 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const Header = () => {
   const logout = useUserStore((state) => state.remove_user);
+  const user = useUserStore((state) => state.user);
+
+  const onLogout = () => {
+    window.localStorage.clear();
+    logout();
+  };
+
   return (
     <header className="navbar bg-base-100">
       <div className="navbar-start">
@@ -30,26 +37,38 @@ const Header = () => {
           >
             <li>
               <NavLink
-                to="/dashboard"
+                to="/find_restaurant"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
-                Dashboard
+                Home
               </NavLink>
             </li>
+            {user && (
+              <>
+                <li>
+                  <NavLink
+                    to="/dashboard"
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                  >
+                    Dashboard
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink
+                    to="/restaurant_list"
+                    className={({ isActive }) => (isActive ? "active" : "")}
+                  >
+                    Restaurant
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/add_restaurant">Add restarant</NavLink>
+                </li>
+              </>
+            )}
             <li>
               <NavLink
-                to="/restaurant_list"
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                Restaurant
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/add_restaurant">Add restarant</NavLink>
-            </li>
-            <li>
-              <NavLink
-                to="/test"
+                to="/"
                 className={({ isActive }) => isActive && "active"}
               >
                 About
@@ -67,37 +86,40 @@ const Header = () => {
         <Link to="/find_restaurant">
           <SearchRoundedIcon />
         </Link>
-        <div className="dropdown dropdown-end">
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar"
-          >
-            <div className="w-10 rounded-full">
-              <img
-                alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-              />
+
+        {user && (
+          <div className="dropdown dropdown-end">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div className="w-10 rounded-full">
+                <img
+                  alt="Tailwind CSS Navbar component"
+                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                />
+              </div>
             </div>
+            <ul
+              tabIndex={0}
+              className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
+            >
+              <li>
+                <a className="justify-between">
+                  Profile
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li>
+                <a>Settings</a>
+              </li>
+              <li>
+                <button onClick={onLogout}>Logout</button>
+              </li>
+            </ul>
           </div>
-          <ul
-            tabIndex={0}
-            className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
-          >
-            <li>
-              <a className="justify-between">
-                Profile
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <button onClick={logout}>Logout</button>
-            </li>
-          </ul>
-        </div>
+        )}
       </div>
     </header>
   );
