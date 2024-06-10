@@ -1,5 +1,6 @@
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { useUserStore } from "../hooks";
+import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 
 const Header = () => {
   const logout = useUserStore((state) => state.remove_user);
@@ -57,10 +58,15 @@ const Header = () => {
           </ul>
         </div>
       </div>
+
       <div className="navbar-center">
         <a className="btn btn-ghost text-xl">Lapor</a>
       </div>
-      <div className="navbar-end">
+
+      <div className="navbar-end gap-3">
+        <Link to="/find_restaurant">
+          <SearchRoundedIcon />
+        </Link>
         <div className="dropdown dropdown-end">
           <div
             tabIndex={0}
