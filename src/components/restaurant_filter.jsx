@@ -1,22 +1,29 @@
 import { useState } from "react";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
 
 const Restaurant_filter = ({ register, handleSubmit, onSearch }) => {
   const [click, setClick] = useState(false);
 
   return (
     <div className="mb-6">
-      <div className="flex justify-end px-6">
+      <div className="flex justify-between px-6">
+        <select
+          className="select select-sm select-bordered select-ghost"
+          {...register("other")}
+        >
+          <option value="most_love">Most loved</option>
+          <option value="most_review">Most review</option>
+        </select>
         <button
-          className="btn btn-outline btn-sm gap-1 rounded-full border-gray-400"
+          className="btn btn-outline btn-sm gap-1 rounded-full border-neutral-300"
           onClick={() => setClick((prev) => !prev)}
         >
-          <FilterAltRoundedIcon fontSize="small" />
+          <FilterListRoundedIcon fontSize="small" />
           Filters
         </button>
       </div>
       {click && (
-        <form className="px-6 pb-6" onSubmit={handleSubmit(onSearch)}>
+        <form className="px-6 pb-2 mt-4" onSubmit={handleSubmit(onSearch)}>
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text-alt">

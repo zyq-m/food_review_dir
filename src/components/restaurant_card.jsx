@@ -22,15 +22,17 @@ const Restaurant_card = () => {
               <div className="flex justify-between items-center mt-1 px-1 text-sm">
                 <div className="font-semibold">{d.name}</div>
                 <div className="inline-flex gap-2">
-                  <div>
+                  <div className="flex items-center gap-1">
                     <FavoriteRoundedIcon
+                      color="action"
                       fontSize="small"
                       className="hover:text-pink-400"
                     />
                     70
                   </div>
-                  <div>
-                    <ReviewsRoundedIcon fontSize="small" /> 70
+                  <div className="flex items-center gap-1">
+                    <ReviewsRoundedIcon fontSize="small" color="action" />
+                    70
                   </div>
                 </div>
               </div>

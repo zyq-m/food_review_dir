@@ -6,7 +6,7 @@ const Restaurant_search = ({ register, handleSubmit, onSearch }) => {
           className="absolute -top-6 w-full px-6"
           onSubmit={handleSubmit(onSearch)}
         >
-          <label className="input flex items-center gap-2">
+          <label className="input flex items-center gap-2 focus-within:outline-none">
             <input
               type="search"
               className="grow"
@@ -30,10 +30,10 @@ const Restaurant_search = ({ register, handleSubmit, onSearch }) => {
       </div>
 
       <ul className="flex justify-center flex-wrap mt-12 text-sm">
-        <li className="mr-4 text-gray-500">Suggested:</li>
-        <li className="mr-4">restaurant</li>
-        <li className="mr-4">kedai makan</li>
-        <li className="mr-4">ganu</li>
+        <li className="mr-3 text-gray-500">Suggested:</li>
+        <li className="mr-3">restaurant</li>
+        <li className="mr-3">kedai makan</li>
+        <li className="mr-3">ganu</li>
       </ul>
     </>
   );
