@@ -7,7 +7,7 @@ const Layout = ({ children }) => {
       <main style={{ minHeight: "calc(100vh - 178px - 66px)" }}>
         {children}
       </main>
-      <footer className="footer mt-6 p-10 bg-neutral text-neutral-content">
+      <footer className="footer mt-10 p-10 bg-neutral text-neutral-content">
         <aside>
           <svg
             width="50"
