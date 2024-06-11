@@ -9,19 +9,40 @@ import InfoRoundedIcon from "@mui/icons-material/InfoRounded";
 import DirectionsRoundedIcon from "@mui/icons-material/DirectionsRounded";
 import RoomServiceRoundedIcon from "@mui/icons-material/RoomServiceRounded";
 import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
-import FilterAltRoundedIcon from "@mui/icons-material/FilterAltRounded";
 import LanguageRoundedIcon from "@mui/icons-material/LanguageRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
+import FilterListRoundedIcon from "@mui/icons-material/FilterListRounded";
+import { useForm } from "react-hook-form";
+
+const bg_img =
+  "https://images.pexels.com/photos/1064136/pexels-photo-1064136.jpeg?auto=compress&cs=tinysrgb&w=400";
+const profile_img =
+  "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=400";
 
 const View_restaurant = () => {
   const { id } = useParams();
+  const { register, handleSubmit } = useForm();
   const [restaurant, setRestaurant] = useState({});
+  const [review, setReview] = useState([]);
+  const [click, setClick] = useState(false);
+
+  const filter_review = async (data) => {
+    try {
+      const res = await api.get(`/review/restaurant/${id}/sort`, {
+        params: data,
+      });
+      setReview(res.data.reviews);
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   useEffect(() => {
     api
       .get(`/restaurant/${id}`)
       .then((res) => {
         setRestaurant(res.data.restaurant);
+        setReview(res.data.restaurant.reviews);
       })
       .catch((err) => {
         console.log(err);
@@ -32,8 +53,25 @@ const View_restaurant = () => {
     <Layout>
       <>
         <div className="bg-base-100">
-          <div className="mb-4 pb-4 text-3xl text-center font-semibold">
+          <div className="relative mb-20">
+            <div
+              className="hero min-h-[calc(100vw_-_12rem)] rounded-b-lg"
+              style={{
+                backgroundImage: `url(${bg_img})`,
+              }}
+            ></div>
+            <div
+              className="hero w-40 h-40 rounded-full mx-auto absolute -bottom-[4.5rem] right-0 left-0 ring ring-base-100"
+              style={{
+                backgroundImage: `url(${profile_img})`,
+              }}
+            ></div>
+          </div>
+          <div className="mb-4 pb-4 text-2xl text-center font-bold">
             {restaurant.name}
+            <span className="block text-sm font-normal text-gray-400">
+              4k loves • 4.5k reviews
+            </span>
           </div>
         </div>
 
@@ -92,18 +130,57 @@ const View_restaurant = () => {
             )}
           </div>
 
-          <div className="flex justify-between items-center px-4 py-3 bg-base-100 rounded-lg">
-            <div className="text-lg font-semibold">Reviews</div>
-            <div>
-              <button className="btn btn-ghost btn-sm">
-                <FilterAltRoundedIcon fontSize="small" />
-                Filters
-              </button>
+          <div className="px-4 py-3 bg-base-100 rounded-lg">
+            <div className="flex justify-between items-center ">
+              <div className="text-lg font-semibold">Reviews</div>
+              <div>
+                <button
+                  className="btn btn-ghost btn-sm gap-1"
+                  onClick={() => setClick((prev) => !prev)}
+                >
+                  <FilterListRoundedIcon fontSize="small" />
+                  Filters
+                </button>
+              </div>
             </div>
+            {click && (
+              <form onSubmit={handleSubmit(filter_review)}>
+                <div className="divider my-3"></div>
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text-alt">Comment</span>
+                  </div>
+                  <select
+                    className="select select-bordered select-ghost"
+                    {...register("date")}
+                  >
+                    <option value="desc">Latest</option>
+                    <option value="asc">Oldest</option>
+                  </select>
+                </label>
+                <label className="form-control w-full">
+                  <div className="label">
+                    <span className="label-text-alt">Comment expression</span>
+                  </div>
+                  <select
+                    className="select select-bordered select-ghost"
+                    {...register("sentiment")}
+                  >
+                    <option value="">Pick one</option>
+                    <option value="positive">Positive</option>
+                    <option value="natural">Natural</option>
+                    <option value="negative">Negative</option>
+                  </select>
+                </label>
+                <button type="submit" className="btn btn-primary w-full mt-4">
+                  Apply
+                </button>
+              </form>
+            )}
           </div>
 
           <div className="grid gap-4">
-            {restaurant.reviews?.map((d) => {
+            {review?.map((d) => {
               return (
                 <div key={d.id} className="px-4 py-3 bg-base-100 rounded-lg">
                   <div className="grid grid-cols-[auto_1fr] gap-x-2 items-end mb-2">
