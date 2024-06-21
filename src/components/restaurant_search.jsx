@@ -1,7 +1,7 @@
 const Restaurant_search = ({ register, handleSubmit, onSearch }) => {
   return (
     <>
-      <div className="relative">
+      <div className="relative md:max-w-2xl md:mx-auto">
         <form
           className="absolute -top-6 w-full px-6"
           onSubmit={handleSubmit(onSearch)}
@@ -11,7 +11,7 @@ const Restaurant_search = ({ register, handleSubmit, onSearch }) => {
               type="search"
               className="grow"
               placeholder="Search"
-              {...register("name")}
+              {...register("sentiment")}
             />
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -31,9 +31,7 @@ const Restaurant_search = ({ register, handleSubmit, onSearch }) => {
 
       <ul className="flex justify-center flex-wrap mt-12 text-sm">
         <li className="mr-3 text-gray-500">Suggested:</li>
-        <li className="mr-3">restaurant</li>
-        <li className="mr-3">kedai makan</li>
-        <li className="mr-3">ganu</li>
+        <li className="mr-3">kedai makan paling sedap</li>
       </ul>
     </>
   );

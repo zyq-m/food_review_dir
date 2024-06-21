@@ -27,6 +27,18 @@ const Restaurant_filter = ({ register, handleSubmit, onSearch }) => {
           <label className="form-control w-full">
             <div className="label">
               <span className="label-text-alt">
+                What is the restaurant name??
+              </span>
+            </div>
+            <input
+              type="text"
+              className="input input-bordered input-ghost w-full"
+              {...register("name")}
+            />
+          </label>
+          <label className="form-control w-full">
+            <div className="label">
+              <span className="label-text-alt">
                 Pick the restaurant category
               </span>
             </div>
@@ -34,7 +46,7 @@ const Restaurant_filter = ({ register, handleSubmit, onSearch }) => {
               className="select select-bordered select-ghost"
               {...register("category")}
             >
-              <option>Pick one</option>
+              <option value="">Pick one</option>
               <option>Star Wars</option>
               <option>Harry Potter</option>
               <option>Lord of the Rings</option>
@@ -53,6 +65,9 @@ const Restaurant_filter = ({ register, handleSubmit, onSearch }) => {
               {...register("location")}
             />
           </label>
+          <button type="submit" className="btn btn-primary w-full mt-4">
+            Apply
+          </button>
         </form>
       )}
     </div>

@@ -28,7 +28,7 @@ const Login_page = () => {
   };
 
   return (
-    <div className="flex items-center px-4 min-h-screen">
+    <div className="flex items-center px-4 min-h-screen md:max-w-md md:mx-auto">
       <div className="flex-1">
         <h1 className="mb-6 text-center text-2xl font-semibold">
           Welcome Back

@@ -15,13 +15,8 @@ const Find_restaurant = () => {
 
   const onSearch = async (data) => {
     try {
-      const params = {
-        name: data.name,
-        category: data.category,
-        location: data.location,
-      };
       const res = await api.get("/restaurant/search", {
-        params: params,
+        params: data,
       });
 
       setRestaurant(res.data.restaurant);
@@ -45,7 +40,7 @@ const Find_restaurant = () => {
     <Layout>
       <div className="mb-7">
         <div
-          className="hero min-h-[calc(100vw_-_10rem)] relative"
+          className="hero min-h-80 relative"
           style={{
             backgroundImage:
               "url(https://images.pexels.com/photos/958545/pexels-photo-958545.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1)",
@@ -67,13 +62,15 @@ const Find_restaurant = () => {
         />
       </div>
 
-      <Restaurant_filter
-        handleSubmit={handleSubmit}
-        onSearch={onSearch}
-        register={register}
-      />
+      <div className="md:max-w-screen-xl md:mx-auto">
+        <Restaurant_filter
+          handleSubmit={handleSubmit}
+          onSearch={onSearch}
+          register={register}
+        />
 
-      <Restaurant_card />
+        <Restaurant_card />
+      </div>
     </Layout>
   );
 };
