@@ -41,7 +41,7 @@ const Add_review = ({ restaurant }) => {
           <div className="divider"></div>
           <div className="flex">
             <div>
-              <AccountCircleRoundedIcon color="action" fontSize="large" />
+              <AccountCircleRoundedIcon fontSize="large" />
             </div>
             <div className="flex-1">
               <textarea

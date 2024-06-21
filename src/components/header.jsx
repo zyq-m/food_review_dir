@@ -12,7 +12,7 @@ const Header = () => {
   };
 
   return (
-    <header className="navbar bg-base-100">
+    <header className="navbar bg-base-100 sticky top-0 z-10">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -79,7 +79,9 @@ const Header = () => {
       </div>
 
       <div className="navbar-center">
-        <a className="btn btn-ghost text-xl">Lapor</a>
+        <Link to="/find_restaurant" className="text-xl font-semibold">
+          Lapor
+        </Link>
       </div>
 
       <div className="navbar-end gap-3">

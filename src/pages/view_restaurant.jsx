@@ -72,7 +72,9 @@ const View_restaurant = () => {
         </div>
 
         <div className="grid gap-4 px-4 md:grid-cols-[0.7fr_1fr] md:grid-w md:max-w-5xl md:mx-auto">
-          <Restaurant_info restaurant={restaurant} />
+          <div className="sticky top-20">
+            <Restaurant_info restaurant={restaurant} />
+          </div>
 
           <div className="md:row-span-2">
             <Add_review restaurant={restaurant} />
