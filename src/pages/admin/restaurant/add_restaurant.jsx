@@ -4,7 +4,6 @@ import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import {
   Register_restaurant,
   Photos,
-  Review,
   Social_media,
   Layout,
 } from "../../../components";
@@ -32,13 +31,6 @@ const Add_restaurant = () => {
       active: false,
       selected: false,
       component: () => <Photos register={register} />,
-    },
-    {
-      id: crypto.randomUUID(),
-      step: "Reviews",
-      active: false,
-      selected: false,
-      component: () => <Review register={register} />,
     },
   ]);
 
@@ -85,7 +77,7 @@ const Add_restaurant = () => {
 
   return (
     <Layout>
-      <div className="px-4 pt-6">
+      <div className="px-4 pt-6 md:max-w-xl md:mx-auto">
         <div className="flex justify-center">
           <ul className="steps gap-4 cursor-pointer">
             {form.map((d) => {
@@ -109,7 +101,7 @@ const Add_restaurant = () => {
                 return <e.component key={crypto.randomUUID()} />;
               })}
           </div>
-          {form.filter((e) => e.selected && e.step == "Reviews").length ? (
+          {form.filter((e) => e.selected && e.step == "Photos").length ? (
             <button type="submit" className="mt-4 btn btn-accent w-full">
               Save
             </button>
