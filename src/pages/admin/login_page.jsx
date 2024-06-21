@@ -21,7 +21,12 @@ const Login_page = () => {
       set_user(sub);
       window.localStorage.setItem("access_token", token.access_token);
       window.localStorage.setItem("refresh_token", token.refresh_token);
-      navigate("/restaurant_list");
+
+      if (sub?.role.id == 1) {
+        navigate("/restaurant_list");
+      } else {
+        navigate("/find_restaurant");
+      }
     } catch (error) {
       console.log(error);
     }
