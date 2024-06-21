@@ -6,6 +6,7 @@ import Update_restaurant from "./admin/restaurant/update_restaurant";
 import Dashboard from "./admin/dashboard";
 import Landing_page from "./user/landing_page";
 import Find_restaurant from "./user/find_restaurant";
+import Sign_up from "./user/sign_up";
 
 export {
   Restaurant_list,
@@ -16,4 +17,5 @@ export {
   Landing_page,
   Dashboard,
   Find_restaurant,
+  Sign_up,
 };
