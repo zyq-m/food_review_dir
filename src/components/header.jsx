@@ -43,7 +43,7 @@ const Header = () => {
                 Home
               </NavLink>
             </li>
-            {user && (
+            {user?.role.id == 1 && (
               <>
                 <li>
                   <NavLink
