@@ -14,7 +14,10 @@ const Register_restaurant = ({ register }) => {
         />
       </label>
 
-      <select className="select select-bordered w-full">
+      <select
+        className="select select-bordered w-full"
+        {...register("category")}
+      >
         <option>Category</option>
         <option>Han Solo</option>
         <option>Greedo</option>

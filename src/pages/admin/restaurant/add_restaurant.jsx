@@ -60,7 +60,9 @@ const Add_restaurant = () => {
     });
   };
 
-  const onRegister = () => {};
+  const onRegister = (data) => {
+    console.log(data);
+  };
 
   const onNext = () => {
     const list = [...form];
@@ -101,20 +103,28 @@ const Add_restaurant = () => {
                 return <e.component key={crypto.randomUUID()} />;
               })}
           </div>
-          {form.filter((e) => e.selected && e.step == "Photos").length ? (
-            <button type="submit" className="mt-4 btn btn-accent w-full">
-              Save
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="mt-4 btn btn-accent w-full"
-              onClick={onNext}
-            >
-              Next
-              <NavigateNextOutlinedIcon />
-            </button>
-          )}
+          <button
+            type="submit"
+            className={`mt-4 btn btn-accent w-full ${
+              form.filter((e) => e.selected && e.step == "Photos").length
+                ? "block"
+                : "hidden"
+            }`}
+          >
+            Save
+          </button>
+          <button
+            type="button"
+            className={`mt-4 btn btn-accent w-full ${
+              form.filter((e) => e.selected && e.step !== "Photos").length
+                ? "block"
+                : "hidden"
+            }`}
+            onClick={onNext}
+          >
+            Next
+            <NavigateNextOutlinedIcon />
+          </button>
         </form>
       </div>
     </Layout>
