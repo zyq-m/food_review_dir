@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useRestaurantStore } from "../../hooks";
+import { useLoading, useRestaurantStore } from "../../hooks";
 import { api } from "../../service/api";
 import {
   Layout,
@@ -12,24 +12,29 @@ import { useForm } from "react-hook-form";
 const Find_restaurant = () => {
   const { register, handleSubmit } = useForm();
   const setRestaurant = useRestaurantStore((state) => state.set_restaurant);
+  const setLoading = useLoading((state) => state.setLoading);
 
   const onSearch = async (data) => {
+    setLoading(true);
     try {
       const res = await api.get("/restaurant/search", {
         params: data,
       });
 
       setRestaurant(res.data.restaurant);
+      setLoading(false);
     } catch (err) {
       console.error(err);
     }
   };
 
   useEffect(() => {
+    setLoading(true);
     api
-      .get("/restaurant/search", { params: { name: "" } })
+      .get("/restaurant")
       .then((res) => {
         setRestaurant(res.data.restaurant);
+        setLoading(false);
       })
       .catch((err) => {
         console.error(err);

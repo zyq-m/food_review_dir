@@ -3,9 +3,6 @@ import ReviewsRoundedIcon from "@mui/icons-material/ReviewsRounded";
 import { Link } from "react-router-dom";
 import { useRestaurantStore } from "../hooks";
 
-const img =
-  "https://images.pexels.com/photos/1267320/pexels-photo-1267320.jpeg?auto=compress&cs=tinysrgb&w=600";
-
 const Restaurant_card = () => {
   const restaurant = useRestaurantStore((state) => state.restaurant);
 
@@ -17,7 +14,7 @@ const Restaurant_card = () => {
             <Link to={`/restaurant/${d.id}`}>
               <div
                 className="min-h-64 bg-slate-50 rounded-lg bg-no-repeat bg-cover bg-center"
-                style={{ backgroundImage: `url(${img})` }}
+                style={{ backgroundImage: `url(${d.photos?.profile.link})` }}
               ></div>
               <div className="flex justify-between items-center mt-1 px-1 text-sm">
                 <div className="font-semibold">{d.name}</div>
@@ -28,11 +25,11 @@ const Restaurant_card = () => {
                       fontSize="small"
                       className="hover:text-pink-400"
                     />
-                    70
+                    {d.positive_review}
                   </div>
                   <div className="flex items-center gap-1">
                     <ReviewsRoundedIcon fontSize="small" color="action" />
-                    70
+                    {d.no_review}
                   </div>
                 </div>
               </div>

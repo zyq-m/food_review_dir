@@ -1,21 +1,20 @@
 import { Route, Routes } from "react-router-dom";
 import * as Pages from "./pages";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<Pages.Landing_page />} />
+      <Route path="/" element={<Pages.Find_restaurant />} />
       <Route path="/login" element={<Pages.Login_page />} />
       <Route path="/sign_up" element={<Pages.Sign_up />} />
-      <Route path="/find_restaurant" element={<Pages.Find_restaurant />} />
       <Route path="/restaurant/:id" element={<Pages.View_restaurant />} />
 
       <Route element={<ProtectedRoute role={[1]} />}>
-        <Route path="/dashboard" element={<Pages.Dashboard />} />
-        <Route path="/restaurant_list" element={<Pages.Restaurant_list />} />
+        <Route path="/dashboard" element={<Pages.Restaurant_list />} />
         <Route path="/add_restaurant" element={<Pages.Add_restaurant />} />
         <Route
-          path="/update_restaurant/:id"
+          path="/update_restaurant/:restaurant_id"
           element={<Pages.Update_restaurant />}
         />
       </Route>

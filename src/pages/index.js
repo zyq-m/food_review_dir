@@ -3,8 +3,6 @@ import Login_page from "./admin/login_page";
 import Add_restaurant from "./admin/restaurant/add_restaurant";
 import View_restaurant from "./view_restaurant";
 import Update_restaurant from "./admin/restaurant/update_restaurant";
-import Dashboard from "./admin/dashboard";
-import Landing_page from "./user/landing_page";
 import Find_restaurant from "./user/find_restaurant";
 import Sign_up from "./user/sign_up";
 
@@ -14,8 +12,6 @@ export {
   Add_restaurant,
   View_restaurant,
   Update_restaurant,
-  Landing_page,
-  Dashboard,
   Find_restaurant,
   Sign_up,
 };

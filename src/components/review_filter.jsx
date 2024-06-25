@@ -42,9 +42,8 @@ const Review_filter = ({ filter_review, handleSubmit, register }) => {
               {...register("sentiment")}
             >
               <option value="">Pick one</option>
-              <option value="positive">Positive</option>
-              <option value="natural">Natural</option>
-              <option value="negative">Negative</option>
+              <option value="1">Positive</option>
+              <option value="0">Negative</option>
             </select>
           </label>
           <button type="submit" className="btn btn-primary w-full mt-4">

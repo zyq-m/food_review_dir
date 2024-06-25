@@ -1,14 +1,22 @@
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useUserStore } from "../hooks";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
+import MenuRoundedIcon from "@mui/icons-material/MenuRounded";
+import AccountCircleRoundedIcon from "@mui/icons-material/AccountCircleRounded";
+import LogoutRoundedIcon from "@mui/icons-material/LogoutRounded";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import AddCircleRoundedIcon from "@mui/icons-material/AddCircleRounded";
+import DashboardRoundedIcon from "@mui/icons-material/DashboardRounded";
 
 const Header = () => {
   const logout = useUserStore((state) => state.remove_user);
   const user = useUserStore((state) => state.user);
+  const navigate = useNavigate();
 
   const onLogout = () => {
     window.localStorage.clear();
     logout();
+    navigate("/login");
   };
 
   return (
@@ -16,20 +24,7 @@ const Header = () => {
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h7"
-              />
-            </svg>
+            <MenuRoundedIcon />
           </div>
           <ul
             tabIndex={0}
@@ -37,55 +32,25 @@ const Header = () => {
           >
             <li>
               <NavLink
-                to="/find_restaurant"
+                to="/"
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
-                Home
+                <HomeRoundedIcon /> Home
               </NavLink>
             </li>
-            {user?.role.id == 1 && (
-              <>
-                <li>
-                  <NavLink
-                    to="/dashboard"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                  >
-                    Dashboard
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink
-                    to="/restaurant_list"
-                    className={({ isActive }) => (isActive ? "active" : "")}
-                  >
-                    Restaurant
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/add_restaurant">Add restarant</NavLink>
-                </li>
-              </>
-            )}
-            <li>
-              <NavLink
-                to="/"
-                className={({ isActive }) => isActive && "active"}
-              >
-                About
-              </NavLink>
-            </li>
+            <Nav_link user={user} />
           </ul>
         </div>
       </div>
 
       <div className="navbar-center">
-        <Link to="/find_restaurant" className="text-xl font-semibold">
+        <Link to="/" className="text-xl font-semibold">
           Lapor
         </Link>
       </div>
 
       <div className="navbar-end gap-3">
-        <Link to="/find_restaurant">
+        <Link to="/">
           <SearchRoundedIcon />
         </Link>
 
@@ -96,28 +61,20 @@ const Header = () => {
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="w-10 rounded-full">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
-                />
+              <div className="rounded-full">
+                <AccountCircleRoundedIcon fontSize="large" />
               </div>
             </div>
             <ul
               tabIndex={0}
               className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"
             >
-              <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
-              </li>
-              <li>
-                <a>Settings</a>
-              </li>
-              <li>
-                <button onClick={onLogout}>Logout</button>
+              <li className="px-3 py-2 font-semibold border-b">{user.email}</li>
+              <li className="pt-2">
+                <button onClick={onLogout}>
+                  <LogoutRoundedIcon fontSize="small" />
+                  Logout
+                </button>
               </li>
             </ul>
           </div>
@@ -128,3 +85,27 @@ const Header = () => {
 };
 
 export default Header;
+
+const Nav_link = ({ user }) => {
+  return (
+    <>
+      {user?.role.id == 1 && (
+        <>
+          <li>
+            <NavLink
+              to="/dashboard"
+              className={({ isActive }) => (isActive ? "active" : "")}
+            >
+              <DashboardRoundedIcon /> Dashboard
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/add_restaurant">
+              <AddCircleRoundedIcon /> Add restarant
+            </NavLink>
+          </li>
+        </>
+      )}
+    </>
+  );
+};

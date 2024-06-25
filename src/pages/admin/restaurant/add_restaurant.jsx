@@ -1,132 +1,65 @@
-import { useState } from "react";
 import { useForm } from "react-hook-form";
-import NavigateNextOutlinedIcon from "@mui/icons-material/NavigateNextOutlined";
 import {
+  Layout,
   Register_restaurant,
   Photos,
   Social_media,
-  Layout,
 } from "../../../components";
+import { api } from "../../../service/api";
+import { ToastContainer } from "react-toastify";
+import notify from "../../../utils/notify";
 
 const Add_restaurant = () => {
-  const { register, handleSubmit } = useForm();
-  const [form, setForm] = useState([
-    {
-      id: crypto.randomUUID(),
-      step: "Register",
-      active: true,
-      selected: true,
-      component: () => <Register_restaurant register={register} />,
-    },
-    {
-      id: crypto.randomUUID(),
-      step: "Social media",
-      active: false,
-      selected: false,
-      component: () => <Social_media register={register} />,
-    },
-    {
-      id: crypto.randomUUID(),
-      step: "Photos",
-      active: false,
-      selected: false,
-      component: () => <Photos register={register} />,
-    },
-  ]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const on_step = (id) => {
-    setForm((prev) => {
-      const prev_tmp = prev;
-
-      prev_tmp.every((tmp, i) => {
-        if (tmp.id === id) {
-          tmp.active = true;
-          tmp.selected = true;
-
-          for (let e = i + 1; e < prev_tmp.length; e++) {
-            prev_tmp[e].active = false;
-            prev_tmp[e].selected = false;
-          }
-
-          return false;
-        }
-
-        tmp.active = true;
-        tmp.selected = false;
-        return true;
-      });
-
-      return prev_tmp.map((e) => e);
-    });
-  };
-
-  const onRegister = (data) => {
-    console.log(data);
-  };
-
-  const onNext = () => {
-    const list = [...form];
-
-    const item = list.find((e) => e.selected);
-    const nextItem = list.findIndex((e) => e.selected) + 1;
-
-    item.selected = false;
-    list[nextItem].selected = true;
-    list[nextItem].active = true;
-
-    setForm(list);
+  const onRegister = async (data) => {
+    try {
+      const res = await api.post("/restaurant", data);
+      notify(res.data.message, true);
+    } catch (err) {
+      notify(err.response.data.message);
+    }
   };
 
   return (
     <Layout>
-      <div className="px-4 pt-6 md:max-w-xl md:mx-auto">
-        <div className="flex justify-center">
-          <ul className="steps gap-4 cursor-pointer">
-            {form.map((d) => {
-              return (
-                <li
-                  key={d.id}
-                  onClick={() => on_step(d.id)}
-                  className={`step ${d.active && "step-accent"}`}
-                >
-                  {d.step}
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-        <form onSubmit={handleSubmit(onRegister)}>
-          <div className="mt-6">
-            {form
-              .filter((d) => d.selected)
-              .map((e) => {
-                return <e.component key={crypto.randomUUID()} />;
-              })}
+      <div
+        className="hero min-h-60 mb-4"
+        style={{
+          backgroundImage:
+            "url(https://images.pexels.com/photos/2878745/pexels-photo-2878745.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+        }}
+      >
+        <div className="hero-overlay bg-opacity-60"></div>
+        <div className="hero-content text-center text-neutral-content">
+          <div className="max-w-md">
+            <h1 className="text-3xl font-bold">Restaurant Registration</h1>
+            <p>Fill the form below to register a restaurant</p>
           </div>
-          <button
-            type="submit"
-            className={`mt-4 btn btn-accent w-full ${
-              form.filter((e) => e.selected && e.step == "Photos").length
-                ? "block"
-                : "hidden"
-            }`}
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            className={`mt-4 btn btn-accent w-full ${
-              form.filter((e) => e.selected && e.step !== "Photos").length
-                ? "block"
-                : "hidden"
-            }`}
-            onClick={onNext}
-          >
-            Next
-            <NavigateNextOutlinedIcon />
-          </button>
+        </div>
+      </div>
+      <div className="md:max-w-5xl md:mx-auto">
+        <form
+          className="form-control gap-4 px-4 md:grid md:grid-cols-2 "
+          onSubmit={handleSubmit(onRegister)}
+        >
+          <div className="md:col-span-2">
+            <Register_restaurant register={register} errors={errors} />
+          </div>
+          <Social_media register={register} />
+          <Photos register={register} />
+          <div className="md:flex md:justify-end md:col-span-2">
+            <button type="submit" className="btn btn-accent">
+              Done
+            </button>
+          </div>
         </form>
       </div>
+      <ToastContainer />
     </Layout>
   );
 };

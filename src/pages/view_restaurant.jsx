@@ -10,17 +10,15 @@ import {
 } from "../components";
 
 import { useForm } from "react-hook-form";
-
-const bg_img =
-  "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
-const profile_img =
-  "https://images.pexels.com/photos/262978/pexels-photo-262978.jpeg?auto=compress&cs=tinysrgb&w=400";
+import { useLoading, useRefresh } from "../hooks";
 
 const View_restaurant = () => {
   const { id } = useParams();
   const { register, handleSubmit } = useForm();
   const [restaurant, setRestaurant] = useState({});
   const [review, setReview] = useState([]);
+  const setLoading = useLoading((state) => state.setLoading);
+  const counter_refresh = useRefresh((s) => s.counter);
 
   const filter_review = async (data) => {
     try {
@@ -33,17 +31,21 @@ const View_restaurant = () => {
     }
   };
 
+  console.log(counter_refresh);
+
   useEffect(() => {
+    setLoading(true);
     api
       .get(`/restaurant/${id}`)
       .then((res) => {
         setRestaurant(res.data.restaurant);
         setReview(res.data.restaurant.reviews);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, [id]);
+  }, [id, counter_refresh]);
 
   return (
     <Layout>
@@ -53,26 +55,26 @@ const View_restaurant = () => {
             <div
               className="hero min-h-64 rounded-b-lg"
               style={{
-                backgroundImage: `url(${bg_img})`,
+                backgroundImage: `url(${restaurant.photos?.bg.link})`,
               }}
             ></div>
             <div
               className="hero w-40 h-40 rounded-full mx-auto absolute -bottom-[4.5rem] right-0 left-0 ring ring-base-100"
               style={{
-                backgroundImage: `url(${profile_img})`,
+                backgroundImage: `url(${restaurant.photos?.profile.link})`,
               }}
             ></div>
           </div>
           <div className="mb-4 pb-4 text-2xl text-center font-bold">
             {restaurant.name}
             <span className="block text-sm font-normal text-gray-400">
-              4k loves • 4.5k reviews
+              {`${restaurant?.positive_review} loves • ${restaurant?.no_review} reviews`}
             </span>
           </div>
         </div>
 
         <div className="grid gap-4 px-4 md:grid-cols-[0.7fr_1fr] md:grid-w md:max-w-5xl md:mx-auto">
-          <div className="sticky top-20">
+          <div className="md:sticky md:top-20">
             <Restaurant_info restaurant={restaurant} />
           </div>
 

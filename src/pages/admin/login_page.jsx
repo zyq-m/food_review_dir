@@ -5,9 +5,15 @@ import useUserStore from "../../hooks/useUserStore";
 import { useNavigate } from "react-router-dom";
 import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
 import KeyOutlinedIcon from "@mui/icons-material/KeyOutlined";
+import { ToastContainer } from "react-toastify";
+import notify from "../../utils/notify";
 
 const Login_page = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const set_user = useUserStore((state) => state.set_user);
   const navigate = useNavigate();
 
@@ -23,12 +29,12 @@ const Login_page = () => {
       window.localStorage.setItem("refresh_token", token.refresh_token);
 
       if (sub?.role.id == 1) {
-        navigate("/restaurant_list");
+        navigate("/dashboard");
       } else {
-        navigate("/find_restaurant");
+        navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      notify(error.response.data.message);
     }
   };
 
@@ -39,22 +45,32 @@ const Login_page = () => {
           Welcome Back
         </h1>
         <form className="form-control gap-4" onSubmit={handleSubmit(on_login)}>
-          <label className="input input-bordered flex items-center gap-2">
+          <label
+            className={`input input-bordered flex items-center gap-2 ${
+              errors?.email?.message && "input-error"
+            }`}
+          >
             <EmailOutlinedIcon color="action" />
             <input
               className="grow"
               type="email"
               placeholder="Email"
-              {...register("email")}
+              {...register("email", { required: "Please enter your email" })}
             />
           </label>
-          <label className="input input-bordered flex items-center gap-2">
+          <label
+            className={`input input-bordered flex items-center gap-2 ${
+              errors?.password?.message && "input-error"
+            }`}
+          >
             <KeyOutlinedIcon color="action" />
             <input
               className="grow"
               type="password"
               placeholder="Password"
-              {...register("password")}
+              {...register("password", {
+                required: "Please enter your password",
+              })}
             />
           </label>
           <button type="submit" className="btn btn-info">
@@ -62,6 +78,7 @@ const Login_page = () => {
           </button>
         </form>
       </div>
+      <ToastContainer />
     </div>
   );
 };

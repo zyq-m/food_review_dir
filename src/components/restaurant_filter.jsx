@@ -11,6 +11,7 @@ const Restaurant_filter = ({ register, handleSubmit, onSearch }) => {
           className="select select-sm select-bordered select-ghost"
           {...register("other")}
         >
+          <option value="">Pick one</option>
           <option value="most_love">Most loved</option>
           <option value="most_review">Most review</option>
         </select>

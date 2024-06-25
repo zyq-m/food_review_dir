@@ -4,15 +4,23 @@ import { useForm } from "react-hook-form";
 import Person2RoundedIcon from "@mui/icons-material/Person2Rounded";
 import { api } from "../../service/api";
 import { Link } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import notify from "../../utils/notify";
 
 const Sign_up = () => {
-  const { handleSubmit, register } = useForm();
+  const {
+    handleSubmit,
+    register,
+    formState: { errors },
+    getValues,
+  } = useForm();
 
   const on_signup = async (data) => {
     try {
-      await api.post("/sign_up", data);
+      const res = await api.post("/sign_up", data);
+      notify(res.data?.message, true);
     } catch (err) {
-      console.log(err);
+      notify(err.response.data.message);
     }
   };
 
@@ -23,25 +31,50 @@ const Sign_up = () => {
           Sign Up Account
         </h1>
         <form className="form-control gap-4" onSubmit={handleSubmit(on_signup)}>
-          <label className="input input-bordered flex items-center gap-2">
-            <EmailOutlinedIcon color="action" />
-            <input
-              className="grow"
-              type="email"
-              placeholder="Email"
-              {...register("email")}
-            />
-          </label>
-          <div className="flex gap-2">
-            <label className="input input-bordered flex items-center gap-2">
-              <Person2RoundedIcon color="action" />
+          <div>
+            <label
+              className={`input input-bordered flex items-center gap-2 ${
+                errors?.email?.message && "input-error"
+              }`}
+            >
+              <EmailOutlinedIcon color="action" />
               <input
                 className="grow"
-                type="text"
-                placeholder="First Name"
-                {...register("first_name")}
+                type="email"
+                placeholder="Email"
+                {...register("email", { required: "Please enter your email" })}
               />
             </label>
+            <div className="text-error-content">
+              <span className="label-text-alt text-error">
+                {errors?.email?.message}
+              </span>
+            </div>
+          </div>
+
+          <div className="flex gap-2">
+            <div>
+              <label
+                className={`input input-bordered flex items-center gap-2 ${
+                  errors?.first_name?.message && "input-error"
+                }`}
+              >
+                <Person2RoundedIcon color="action" />
+                <input
+                  className="grow"
+                  type="text"
+                  placeholder="First Name"
+                  {...register("first_name", {
+                    required: "Please enter first name",
+                  })}
+                />
+              </label>
+              <div className="text-error-content">
+                <span className="label-text-alt text-error">
+                  {errors?.first_name?.message}
+                </span>
+              </div>
+            </div>
             <label className="input input-bordered flex items-center gap-2">
               <Person2RoundedIcon color="action" />
               <input
@@ -52,24 +85,56 @@ const Sign_up = () => {
               />
             </label>
           </div>
-          <label className="input input-bordered flex items-center gap-2">
-            <KeyOutlinedIcon color="action" />
-            <input
-              className="grow"
-              type="password"
-              placeholder="Password"
-              {...register("password")}
-            />
-          </label>
-          <label className="input input-bordered flex items-center gap-2">
-            <KeyOutlinedIcon color="action" />
-            <input
-              className="grow"
-              type="password"
-              placeholder="Confirm Password"
-              {...register("con_password")}
-            />
-          </label>
+
+          <div>
+            <label
+              className={`input input-bordered flex items-center gap-2 ${
+                errors?.password?.message && "input-error"
+              }`}
+            >
+              <KeyOutlinedIcon color="action" />
+              <input
+                className="grow"
+                type="password"
+                placeholder="Password"
+                {...register("password", {
+                  required: "Please enter your password",
+                })}
+              />
+            </label>
+            <div className="text-error-content">
+              <span className="label-text-alt text-error">
+                {errors?.password?.message}
+              </span>
+            </div>
+          </div>
+
+          <div>
+            <label
+              className={`input input-bordered flex items-center gap-2 ${
+                errors?.con_password?.message && "input-error"
+              }`}
+            >
+              <KeyOutlinedIcon color="action" />
+              <input
+                className="grow"
+                type="password"
+                placeholder="Confirm Password"
+                {...register("con_password", {
+                  required: "Please enter confirm password",
+                  validate: (match) => {
+                    const password = getValues("password");
+                    return match === password || "Passwords should match!";
+                  },
+                })}
+              />
+            </label>
+            <div className="text-error-content">
+              <span className="label-text-alt text-error">
+                {errors?.con_password?.message}
+              </span>
+            </div>
+          </div>
           <button type="submit" className="btn btn-info">
             Sign up
           </button>
@@ -81,6 +146,7 @@ const Sign_up = () => {
           </Link>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

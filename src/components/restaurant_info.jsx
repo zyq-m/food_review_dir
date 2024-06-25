@@ -16,7 +16,7 @@ const Restaurant_info = ({ restaurant }) => {
         <InfoRoundedIcon />
         <Link
           className="link-hover"
-          to={restaurant.social_links?.[0].fb}
+          to={restaurant.social_links?.fb}
           target="_blank"
         >
           Page · {restaurant.category}
@@ -34,10 +34,10 @@ const Restaurant_info = ({ restaurant }) => {
       ) : (
         ""
       )}
-      {restaurant.social_links?.[1] ? (
+      {restaurant.social_links?.email ? (
         <div className="flex gap-2">
           <EmailRoundedIcon />
-          {restaurant.social_links?.[1]?.email}
+          {restaurant.social_links.email}
         </div>
       ) : (
         ""

@@ -9,6 +9,9 @@ import Review_card from "./review_card";
 import Restaurant_info from "./restaurant_info";
 import Review_filter from "./review_filter";
 import Add_review from "./add_review";
+import Register_steps from "./register_steps";
+import Loading_state from "./loading_state";
+import Footer from "./footer";
 
 export {
   Photos,
@@ -22,4 +25,7 @@ export {
   Restaurant_info,
   Review_filter,
   Add_review,
+  Register_steps,
+  Loading_state,
+  Footer,
 };
